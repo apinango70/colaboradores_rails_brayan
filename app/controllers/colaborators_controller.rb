@@ -38,7 +38,7 @@ class ColaboratorsController < ApplicationController
   def update
     respond_to do |format|
       if @colaborator.update(colaborator_params)
-        format.html { redirect_to colaborator_url(@colaborator), notice: "Colaborator was successfully updated." }
+        format.html { redirect_to colaborator_url(@colaborator), notice: "Se actualizo satisfactoriamente." }
         format.json { render :show, status: :ok, location: @colaborator }
       else
         format.html { render :edit, status: :unprocessable_entity }
