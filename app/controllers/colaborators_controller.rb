@@ -1,18 +1,31 @@
 class ColaboratorsController < ApplicationController
   before_action :set_colaborator, only: %i[ show edit update destroy ]
-
+  
   # GET /colaborators or /colaborators.json
   def index
-    @colaborators = Colaborator.all
+    @colaborator = Colaborator.new
+    @pagy, @colaborators = pagy(Colaborator.all.order(:created_at => :desc))
+
+    if params[:query_text].present?
+      @colaborators = @colaborators.search_full_text(params[:query_text])
+    end
   end
 
   # GET /colaborators/1 or /colaborators/1.json
   def show
   end
 
+  # GET /colaborators/1/preview
+  def preview
+  end
+ 
+  # GET /colaborators/search
+  def search
+  end
+ 
+
   # GET /colaborators/new
   def new
-    @colaborator = Colaborator.new
   end
 
   # GET /colaborators/1/edit
@@ -25,7 +38,7 @@ class ColaboratorsController < ApplicationController
 
     respond_to do |format|
       if @colaborator.save
-        format.html { redirect_to colaborator_url(@colaborator), notice: "Colaborator was successfully created." }
+        format.html { redirect_to colaborators_url, notice: "Colaborator was successfully created." }
         format.json { render :show, status: :created, location: @colaborator }
       else
         format.html { render :new, status: :unprocessable_entity }

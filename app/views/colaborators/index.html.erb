@@ -1,14 +1,34 @@
 <p style="color: green"><%= notice %></p>
 
+<%= form_with url: colaborators_path, method: :get do |form| %>
+  <%= form.text_field :query_text,
+    placeholder: 'Query text',
+    value: params[:query_text] %>
+<% end %>
+
+<hr>
+<hr>
+
 <h1>Colaborators</h1>
+
+<%= render "form", colaborator: @colaborator %>
+
+<%= link_to new_colaborator_path, class: "btn btn-light" do %>
+  ➕ Add a new colaborator
+<% end %>
 
 <div id="colaborators">
   <% @colaborators.each do |colaborator| %>
-    <%= render colaborator %>
-    <p>
-      <%= link_to "Show this colaborator", colaborator %>
-    </p>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%= colaborator.name %></h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary"><%= colaborator.email %></h6>
+        <p class="card-text"><%= colaborator.direction %></p>
+        <%= link_to "Show this colaborator", colaborator, class: "card-link" %>
+      </div>
+    </div>
+    <br>
   <% end %>
 </div>
 
-<%= link_to "New colaborator", new_colaborator_path %>
+<%== pagy_bootstrap_nav(@pagy) %>
